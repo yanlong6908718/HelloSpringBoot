@@ -25,4 +25,8 @@ public class HelloRestController {
   public String hello() {
     return "Hello. All your base are belong to us.";
   }
+//  @RequestMapping
+//  public int num(){
+//      return 123;
+//  }
 }
