@@ -14,36 +14,36 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({ServiceException.class})
-    public String serviceExceptionHandler(ServiceException se){
+    public ResultDto serviceExceptionHandler(ServiceException se){
 
         return resultFormat(se);
     }
 
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
     @ExceptionHandler({Exception.class})
-    public String exceptionHandler(Exception e){
+    public ResultDto exceptionHandler(Exception e){
 
         return resultFormat(e);
     }
 
     @ExceptionHandler({Throwable.class})
-    public String throwableHandler(Throwable t){
+    public ResultDto throwableHandler(Throwable t){
         log.error(t.getMessage());
-        return "系统错误";
+        return ResultDto.fail("系统错误");
     }
 
 
-    public String resultFormat(Throwable t){
+    public ResultDto resultFormat(Throwable t){
         String tips="系统繁忙，请稍后重试";
         if(t instanceof ServiceException){
             log.error(t.getMessage());
-            return "业务异常 "+tips;
+            return ResultDto.fail("业务异常 "+tips);
         }
         if(t instanceof Exception){
             log.error(t.getMessage());
-            return "系统异常 "+tips;
+            return ResultDto.fail("系统异常 "+tips);
         }
-        return tips;
+        return ResultDto.fail(tips);
     }
 
 

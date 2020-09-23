@@ -1,2 +1,25 @@
 server:
   port: 8093
+  servlet:
+    session:
+      timeout: 30m
+
+
+spring:
+  applicaton:
+    name: Web-test
+  datasource:
+    url: jdbc:mysql://39.107.46.21:3306/web-test?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 111111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.makotojava.learn.hellospringboot.entity
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+logging:
+  level:
+    com.hogwartsmini.demo.dao: debug

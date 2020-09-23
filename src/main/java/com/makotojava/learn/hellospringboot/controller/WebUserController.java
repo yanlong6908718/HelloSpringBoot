@@ -1,5 +1,6 @@
 package com.makotojava.learn.hellospringboot.controller;
 
+import com.makotojava.learn.hellospringboot.common.ResultDto;
 import com.makotojava.learn.hellospringboot.common.ServiceException;
 import com.makotojava.learn.hellospringboot.dto.UserDto;
 import com.makotojava.learn.hellospringboot.service.WebTestUserService;
@@ -28,7 +29,7 @@ public class WebUserController {
 
     @PostMapping(value="login")
     @ApiOperation("登陆")
-    public String login(@RequestBody UserDto userDto){
+    public ResultDto<UserDto> login(@RequestBody UserDto userDto){
         String result = webTestUserService.login(userDto);
 
             if (userDto.getName().contains("error")){
@@ -39,7 +40,7 @@ public class WebUserController {
             }
 
 
-        return "success,成功"+userinfo1;
+        return ResultDto.success("success,成功"+userinfo1);
     }
 
     @GetMapping(value="byid/{userid}/{id}")
