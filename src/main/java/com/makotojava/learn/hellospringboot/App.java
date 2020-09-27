@@ -24,8 +24,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
+@MapperScan("com.makotojava.learn.hellospringboot.dao")
 public class App {
 
   private static final Logger log = LoggerFactory.getLogger(App.class);

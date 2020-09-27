@@ -1,12 +1,16 @@
 package com.makotojava.learn.hellospringboot.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.makotojava.learn.hellospringboot.common.ResultDto;
 import com.makotojava.learn.hellospringboot.common.ServiceException;
+import com.makotojava.learn.hellospringboot.dto.AddWebTestUserDto;
 import com.makotojava.learn.hellospringboot.dto.UserDto;
+import com.makotojava.learn.hellospringboot.entity.WebTestUser;
 import com.makotojava.learn.hellospringboot.service.WebTestUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +23,22 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api(tags = "用户管理")
 @RequestMapping("user")
-@Slf4j
 public class WebUserController {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebUserController.class);
     @Autowired
     private WebTestUserService webTestUserService;
     @Value("${info.key1}")
     private String userinfo1;
 
+    @PostMapping(value="register")
+    @ApiOperation("注册")
+    public ResultDto<WebTestUser> register(@RequestBody AddWebTestUserDto addWebTestUserDto){
+
+        WebTestUser webTestUser=new WebTestUser();
+        BeanUtils.copyProperties(addWebTestUserDto,webTestUser);
+        System.out.println(JSONObject.toJSONString(webTestUser));
+        return webTestUserService.save(webTestUser);
+    }
 
     @PostMapping(value="login")
     @ApiOperation("登陆")
